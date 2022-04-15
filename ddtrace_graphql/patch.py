@@ -8,7 +8,7 @@ import logging
 import os
 
 import graphql
-import graphql.backend.core
+import graphql.execution
 import wrapt
 from ddtrace.util import unwrap
 
@@ -36,13 +36,13 @@ def patch(span_kwargs=None, span_callback=None, ignore_exceptions=()):
 
     wrapt.wrap_function_wrapper(graphql, "graphql", wrapper)
 
-    logger.debug("Patching `graphql.backend.core.execute_and_validate` function.")
+    logger.debug("Patching `graphql.execution.execute` function.")
 
-    wrapt.wrap_function_wrapper(graphql.backend.core, "execute_and_validate", wrapper)
+    wrapt.wrap_function_wrapper(graphql.execution, "execute", wrapper)
 
 
 def unpatch():
     logger.debug("Unpatching `graphql.graphql` function.")
     unwrap(graphql, "graphql")
-    logger.debug("Unpatching `graphql.backend.core.execute_and_validate` function.")
-    unwrap(graphql.backend.core, "execute_and_validate")
+    logger.debug("Unpatching `graphql.execution.execute` function.")
+    unwrap(graphql.execute, "execute")
