@@ -1,6 +1,5 @@
 import logging
 import os
-from typing import Optional
 
 import ddtrace
 import graphql
@@ -64,7 +63,7 @@ def traced_graphql_wrapped(
 
     with tracer.trace(**_span_kwargs) as span:
         span.set_tag(QUERY, query)
-        result: Optional[graphql.ExecutionResult] = None
+        result = None
         try:
             result = func(*args, **kwargs)
             return result
