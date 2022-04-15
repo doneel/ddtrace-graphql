@@ -3,8 +3,10 @@ import re
 import traceback
 from io import StringIO
 
-from graphql.error import GraphQLError, format_error
-from graphql.language.ast import Document
+from graphql.error import GraphQLError
+from graphql.error.graphql_error import format_error
+
+from graphql.language.ast import DocumentNode
 
 
 def get_request_string(args, kwargs):
@@ -19,7 +21,7 @@ def get_query_string(args, kwargs):
     Given ``args``, ``kwargs`` of original function, returns query as string.
     """
     rs = get_request_string(args, kwargs)
-    return rs.loc.source.body if isinstance(rs, Document) else rs
+    return rs.loc.source.body if isinstance(rs, DocumentNode) else rs
 
 
 def is_server_error(result, ignore_exceptions):
