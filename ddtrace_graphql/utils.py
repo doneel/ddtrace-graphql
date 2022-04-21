@@ -37,12 +37,10 @@ def is_server_error(result, ignore_exceptions):
     return bool(
         (
             errors
-            and not result.invalid
         )
         or
         (
             errors
-            and result.invalid
             and len(result.errors) == 1
             and not isinstance(result.errors[0], GraphQLError)
         )
