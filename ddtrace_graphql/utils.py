@@ -96,7 +96,7 @@ def format_errors_traceback(errors):
     """
     return "\n\n".join([
         format_error_traceback(original_error(error))
-        for error in errors if isinstance(error, Exception)
+        for error in errors if isinstance(original_error(error), Exception)
     ])
 
 
